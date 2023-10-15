@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { ChatState } from '../context/ChatProvider'
 import { NotificationState } from '../context/NotificationProvider';
-import { Box, FormControl, IconButton, Input, Spinner, Text, useToast } from '@chakra-ui/react';
-import { ArrowBackIcon } from '@chakra-ui/icons';
+import { Box, Container, FormControl, IconButton, Input, Spinner, Text, useToast } from '@chakra-ui/react';
+import { ArrowBackIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { getSender } from '../config/ChatLogics';
 import ProfileModal from './Miscellaneous/ProfileModal';
 import UpdateGroupChatModal from './Miscellaneous/UpdateGroupChatModal';
@@ -12,7 +12,8 @@ import io from 'socket.io-client';
 import Lottie from 'lottie-react';
 import typingAnimationData from '../animations/typing.json';
 
-const ENDPOINT = (location.protocol + "//" + location.hostname) || "http://localhost:5000";
+// const ENDPOINT = (location.protocol + "//" + location.hostname) || "http://localhost:5000";
+const ENDPOINT = "http://localhost:5000";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -24,6 +25,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [sendingMessage, setSendingMessage] = useState(false);
   const toast = useToast();
 
   
@@ -82,6 +84,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   });
   
   const sendMessage = async (event) => {
+    setSendingMessage(true);
     if (event.key === 'Enter' && newMessage){
       const config = {
         headers: {
@@ -108,6 +111,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         });
       }
     }
+    setSendingMessage(false);
   }
 
   const typingHandler = (event) => {
@@ -196,13 +200,23 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                     />
                   </div>
                 ) : <></> }
-                <Input
-                  variant={"filled"}
-                  bg={"#FFFFFF"}
-                  placeholder='Type message...'
-                  onChange={typingHandler}
-                  value={newMessage}
-                />
+                <Container display={"flex"}>
+                  <Input
+                    variant={"filled"}
+                    bg={"#FFFFFF"}
+                    placeholder='Type message...'
+                    onChange={typingHandler}
+                    value={newMessage}
+                    borderRightRadius={"0px"}
+                  />
+                  <IconButton
+                    isLoading={sendingMessage}
+                    onClick={sendMessage}
+                    icon={<ChevronRightIcon />}
+                    bgColor={"white"}
+                    borderLeftRadius={"0px"}
+                  />
+                </Container>
               </FormControl>
             </Box>
           </>
