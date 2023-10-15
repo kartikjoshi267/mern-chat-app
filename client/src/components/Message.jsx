@@ -1,6 +1,6 @@
 import React from "react";
 import { ChatState } from "../context/ChatProvider";
-import { Container, Image, Text, Tooltip } from "@chakra-ui/react";
+import { Avatar, Container, Image, Text, Tooltip } from "@chakra-ui/react";
 import ScrollableFeed from "react-scrollable-feed";
 import { isLastMessage } from "../config/ChatLogics";
 
@@ -27,12 +27,12 @@ const Message = ({ messages }) => {
                 placement={"bottom-start"}
                 hasArrow
               >
-                <Image
+                <Avatar
                   w={8}
                   h={8}
                   borderRadius={"full"}
                   src={message.sender.picture}
-                  alt={message.sender.name}
+                  name={message.sender.name}
                 />
               </Tooltip>
             ) : (

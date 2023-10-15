@@ -13,6 +13,7 @@ import {
   Button,
   Image,
   Text,
+  Avatar,
 } from "@chakra-ui/react";
 
 const ProfileModal = ({ user, children }) => {
@@ -52,9 +53,9 @@ const ProfileModal = ({ user, children }) => {
             alignItems={"center"}
             justifyContent={"space-between"}
           >
-            <Image
+            <Avatar
               src={user.picture}
-              alt={user.name}
+              name={user.name}
               boxSize={"150px"}
               borderRadius={"full"}
             />

@@ -110,14 +110,7 @@ const Signup = () => {
         }
       }
       
-      let data;
-      if (credentials.picture !== ""){
-        const { dat } = await axios.post("/api/user/", { name: credentials.name, email: credentials.email, picture: credentials.picture, password: credentials.password }, config);
-        data = dat;
-      } else {
-        const { dat } = await axios.post("/api/user/", { name: credentials.name, email: credentials.email, password: credentials.password }, config);
-        data = dat;
-      }
+      const { data } = await axios.post("/api/user/", { name: credentials.name, email: credentials.email, picture: credentials.picture === "" ? undefined : credentials.picture, password: credentials.password }, config);
       toast({
         title: 'Registration successful',
         status: 'success',
@@ -126,11 +119,17 @@ const Signup = () => {
         position: 'bottom'
       });
 
-      localStorage.setItem('userInfo', JSON.stringify(data));
       setLoading(false);
-      navigator("/chats");
+      location.reload();
     } catch (error) {
-      
+      toast({
+        title: 'Registration unsuccessful',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom'
+      });
+      setLoading(false);
     }
   };
 
