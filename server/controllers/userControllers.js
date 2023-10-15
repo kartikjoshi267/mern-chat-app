@@ -3,7 +3,7 @@ import User from "../models/userModel.js";
 import generateToken from "../config/generateToken.js";
 
 const registerUser = expressAsyncHandler(async (req, res) => {
-  const { name, email, password, pic } = req.body;
+  const { name, email, password, picture } = req.body;
 
   if (!name || !email || !password){
     res.status(400);
@@ -20,7 +20,7 @@ const registerUser = expressAsyncHandler(async (req, res) => {
     name,
     email,
     password,
-    pic
+    picture
   });
 
   if (user){

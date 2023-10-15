@@ -18,7 +18,6 @@ const userSchema = new Schema(
     },
     picture: {
       type: String,
-      required: true,
       default: undefined,
     },
     isAdmin: {
