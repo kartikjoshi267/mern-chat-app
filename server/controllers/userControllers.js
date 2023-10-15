@@ -20,7 +20,7 @@ const registerUser = expressAsyncHandler(async (req, res) => {
     name,
     email,
     password,
-    picture
+    picture: picture
   });
 
   if (user){
